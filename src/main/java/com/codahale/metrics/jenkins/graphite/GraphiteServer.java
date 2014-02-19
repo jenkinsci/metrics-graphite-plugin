@@ -106,14 +106,8 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
         }
 
         @Override
-        public synchronized boolean configure(StaplerRequest req, JSONObject json) throws FormException {
-            servers = req.bindJSONToList(GraphiteServer.class, json.get("servers"));
-            save();
-            try {
-                Jenkins.getInstance().getPlugin(PluginImpl.class).updateReporters();
-            } catch (URISyntaxException e) {
-                LOGGER.log(Level.WARNING, "Could not update Graphite reporters", e);
-            }
+        public boolean configure(StaplerRequest req, JSONObject json) throws FormException {
+            setServers(req.bindJSONToList(GraphiteServer.class, json.get("servers")));
             return true;
         }
 
@@ -121,6 +115,16 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
             return servers == null
                     ? Collections.<GraphiteServer>emptyList()
                     : Collections.unmodifiableList(new ArrayList<GraphiteServer>(servers));
+        }
+
+        public synchronized void setServers(List<GraphiteServer> servers) {
+            this.servers = servers;
+            save();
+            try {
+                Jenkins.getInstance().getPlugin(PluginImpl.class).updateReporters();
+            } catch (URISyntaxException e) {
+                LOGGER.log(Level.WARNING, "Could not update Graphite reporters", e);
+            }
         }
     }
 
