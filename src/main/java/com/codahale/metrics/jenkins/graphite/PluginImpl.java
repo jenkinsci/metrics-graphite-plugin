@@ -57,9 +57,6 @@ public class PluginImpl extends Plugin {
             reporters = new LinkedHashMap<GraphiteServer, GraphiteReporter>();
         }
         MetricRegistry registry = Metrics.metricRegistry();
-        if (registry == null) {
-            return;
-        }
         GraphiteServer.DescriptorImpl descriptor =
                 Jenkins.getInstance().getDescriptorByType(GraphiteServer.DescriptorImpl.class);
         if (descriptor == null) {
