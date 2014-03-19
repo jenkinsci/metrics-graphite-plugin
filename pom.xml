@@ -32,13 +32,13 @@
     <version>1.520</version>
   </parent>
 
-  <artifactId>codahale-metrics-graphite</artifactId>
-  <version>3.0.2-1-SNAPSHOT</version>
+  <artifactId>metrics-graphite</artifactId>
+  <version>3.0-SNAPSHOT</version>
   <packaging>hpi</packaging>
 
-  <name>Codahale Metrics Graphite Reporting Plugin</name>
+  <name>Metrics Graphite Reporting Plugin</name>
   <description>
-    This plugin streams Codahale Metrics to a Graphite server.
+    This plugin streams Metrics to a Graphite server.
   </description>
   <url>http://wiki.jenkins-ci.org/display/JENKINS/Codahale+Metrics+Graphite+Plugin</url>
   <licenses>
@@ -61,15 +61,14 @@
   </prerequisites>
 
   <scm>
-    <connection>scm:git:git://github.com/jenkinsci/codahale-metrics-graphite-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/codahale-metrics-graphite-plugin.git</developerConnection>
-    <url>http://github.com/jenkinsci/codahale-metrics-graphite-plugin</url>
+    <connection>scm:git:git://github.com/jenkinsci/metrics-graphite-plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:jenkinsci/metrics-graphite-plugin.git</developerConnection>
+    <url>http://github.com/jenkinsci/metrics-graphite-plugin</url>
     <tag>HEAD</tag>
   </scm>
 
   <properties>
     <metrics.version>3.0.2</metrics.version>
-    <git.provider>git</git.provider>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.outputEncoding>UTF-8</project.build.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -99,8 +98,8 @@
     <!-- plugin dependencies -->
     <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
-      <artifactId>codahale-metrics</artifactId>
-      <version>3.0.2-1-SNAPSHOT</version>
+      <artifactId>metrics</artifactId>
+      <version>3.0-SNAPSHOT</version>
     </dependency>
     <!-- jenkins dependencies -->
     <!-- test dependencies -->
@@ -152,24 +151,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>2.4.2</version>
-        <configuration>
-          <providerImplementations>
-            <git>${git.provider}</git>
-          </providerImplementations>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.apache.maven.scm</groupId>
-            <artifactId>maven-scm-provider-jgit</artifactId>
-            <version>1.9</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.maven.scm</groupId>
-            <artifactId>maven-scm-provider-gitexe</artifactId>
-            <version>1.9</version>
-          </dependency>
-        </dependencies>
+        <version>2.5</version>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

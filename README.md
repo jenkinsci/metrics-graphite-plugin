@@ -1,6 +1,6 @@
-# Codahale Metrics Graphite Plugin
+# Metrics Graphite Plugin
 
-This plugin streams [Codahale Metrics](http://wiki.jenkins-ci.org/display/JENKINS/Codahale+Metrics+Plugin) to
+This plugin streams [Metrics](http://wiki.jenkins-ci.org/display/JENKINS/Metrics+Plugin) to
 a [Graphite](http://graphite.wikidot.com/) server.
 
 See also this [plugin's wiki page][wiki]
@@ -29,4 +29,4 @@ To test in a local Jenkins instance
 
     mvn hpi:run
 
-  [wiki]: http://wiki.jenkins-ci.org/display/JENKINS/Codahale+Metrics+Graphite+Plugin
+  [wiki]: http://wiki.jenkins-ci.org/display/JENKINS/Metrics+Graphite+Plugin

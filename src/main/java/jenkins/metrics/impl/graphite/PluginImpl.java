@@ -1,10 +1,10 @@
-package com.codahale.metrics.jenkins.graphite;
+package jenkins.metrics.impl.graphite;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
-import com.codahale.metrics.jenkins.Metrics;
+import jenkins.metrics.api.Metrics;
 import hudson.Plugin;
 import jenkins.model.Jenkins;
 import jenkins.model.JenkinsLocationConfiguration;

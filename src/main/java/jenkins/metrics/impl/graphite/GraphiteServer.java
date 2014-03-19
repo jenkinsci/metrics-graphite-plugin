@@ -1,6 +1,5 @@
-package com.codahale.metrics.jenkins.graphite;
+package jenkins.metrics.impl.graphite;
 
-import com.codahale.metrics.graphite.Graphite;
 import hudson.Extension;
 import hudson.model.AbstractDescribableImpl;
 import hudson.model.Descriptor;
