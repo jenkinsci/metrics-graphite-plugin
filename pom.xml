@@ -40,7 +40,7 @@
   <description>
     This plugin streams Metrics to a Graphite server.
   </description>
-  <url>http://wiki.jenkins-ci.org/display/JENKINS/Codahale+Metrics+Graphite+Plugin</url>
+  <url>http://wiki.jenkins-ci.org/display/JENKINS/Metrics+Graphite+Plugin</url>
   <licenses>
     <license>
       <name>The MIT license</name>
