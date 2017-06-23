@@ -4,6 +4,8 @@ import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.graphite.Graphite;
 import com.codahale.metrics.graphite.GraphiteReporter;
+import com.codahale.metrics.graphite.GraphiteSender;
+import com.codahale.metrics.graphite.GraphiteUDP;
 import jenkins.metrics.api.Metrics;
 import hudson.Plugin;
 import jenkins.model.Jenkins;
@@ -68,8 +70,13 @@ public class PluginImpl extends Plugin {
         Set<GraphiteServer> toStop = new HashSet<GraphiteServer>(reporters.keySet());
         for (GraphiteServer s : descriptor.getServers()) {
             toStop.remove(s);
+            GraphiteSender g;
             if (reporters.containsKey(s)) continue;
-            Graphite g = new Graphite(new InetSocketAddress(s.getHostname(), s.getPort()));
+            if (s.getProtocol() == "udp") {
+                g = new GraphiteUDP(new InetSocketAddress(s.getHostname(), s.getPort()));
+            } else {
+                g = new Graphite(new InetSocketAddress(s.getHostname(), s.getPort()));
+            }
             String prefix = StringUtils.isBlank(s.getPrefix()) ? hostname : s.getPrefix();
             GraphiteReporter r = GraphiteReporter.forRegistry(registry)
                     .prefixedWith(prefix)

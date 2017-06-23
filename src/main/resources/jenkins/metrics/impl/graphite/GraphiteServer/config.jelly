@@ -25,6 +25,9 @@
   <f:entry title="${%Hostname}" field="hostname">
     <f:textbox/>
   </f:entry>
+  <f:entry title="${%Protocol}" field="protocol">
+    <f:number default="tcp"/>
+  </f:entry>
   <f:entry title="${%Port}" field="port">
     <f:number default="2003"/>
   </f:entry>

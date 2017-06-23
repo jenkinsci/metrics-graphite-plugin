@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
 
     private static final Logger LOGGER = Logger.getLogger(GraphiteServer.class.getName());
+    private final String protocol;
     private final String hostname;
 
     private final int port;
@@ -29,9 +30,10 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
     private final String prefix;
 
     @DataBoundConstructor
-    public GraphiteServer(String hostname, int port, String prefix) {
+    public GraphiteServer(String hostname, int port, String prefix, String protocol) {
         this.hostname = hostname;
         this.port = port;
+        this.protocol = protocol;
         this.prefix = prefix;
     }
 
@@ -43,6 +45,10 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
         return port;
     }
 
+    public String getProtocol() {
+        return protocol;
+    }
+
     public String getPrefix() {
         return prefix;
     }
@@ -50,6 +56,7 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("GraphiteServer{");
+        sb.append("proto='").append(protocol).append('\'');
         sb.append("hostname='").append(hostname).append('\'');
         sb.append(", port=").append(port);
         sb.append(", prefix='").append(prefix).append('\'');
@@ -68,6 +75,9 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
 
         GraphiteServer that = (GraphiteServer) o;
 
+        if (protocol != that.protocol) {
+            return false;
+        }
         if (port != that.port) {
             return false;
         }
@@ -84,6 +94,7 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
     @Override
     public int hashCode() {
         int result = hostname != null ? hostname.hashCode() : 0;
+        result = 31 * result + (protocol != null ? protocol.hashCode() : 0);
         result = 31 * result + port;
         result = 31 * result + (prefix != null ? prefix.hashCode() : 0);
         return result;
