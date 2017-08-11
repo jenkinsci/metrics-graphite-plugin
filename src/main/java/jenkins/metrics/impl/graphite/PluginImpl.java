@@ -29,6 +29,15 @@ public class PluginImpl extends Plugin {
 
     private transient Map<GraphiteServer, GraphiteReporter> reporters;
 
+    static final String SAMPLING_INTERVAL_PROPERTY = "graphite.metrics.intervalSeconds";
+
+    /** Return the sampling interval to use, in seconds
+     */
+    static int getSamplingIntervalSeconds() {
+        // Safe to directly fetch property because only invoked when reporters are updated
+        return Integer.getInteger((SAMPLING_INTERVAL_PROPERTY), 60);
+    }
+
     public PluginImpl() {
         this.reporters = new LinkedHashMap<GraphiteServer, GraphiteReporter>();
     }
@@ -58,11 +67,15 @@ public class PluginImpl extends Plugin {
         }
         MetricRegistry registry = Metrics.metricRegistry();
         GraphiteServer.DescriptorImpl descriptor =
-                Jenkins.getInstance().getDescriptorByType(GraphiteServer.DescriptorImpl.class);
+                Jenkins.getActiveInstance().getDescriptorByType(GraphiteServer.DescriptorImpl.class);
         if (descriptor == null) {
             return;
         }
-        String url = JenkinsLocationConfiguration.get().getUrl();
+        JenkinsLocationConfiguration locationConfiguration = JenkinsLocationConfiguration.get();
+        String url = null;
+        if (locationConfiguration != null) {
+            url = locationConfiguration.getUrl();
+        }
         URI uri = url == null ? null : new URI(url);
         String hostname = uri == null ? "localhost" : uri.getHost();
         Set<GraphiteServer> toStop = new HashSet<GraphiteServer>(reporters.keySet());
@@ -81,7 +94,7 @@ public class PluginImpl extends Plugin {
             LOGGER.log(Level.INFO, "Starting Graphite reporter to {0}:{1} with prefix {2}", new Object[]{
                     s.getHostname(), s.getPort(), prefix
             });
-            r.start(1, TimeUnit.MINUTES);
+            r.start(getSamplingIntervalSeconds(), TimeUnit.SECONDS);
         }
         for (GraphiteServer s: toStop) {
             GraphiteReporter r = reporters.get(s);

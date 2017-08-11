@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -116,11 +117,11 @@ public class GraphiteServer extends AbstractDescribableImpl<GraphiteServer> {
                     : Collections.unmodifiableList(new ArrayList<GraphiteServer>(servers));
         }
 
-        public synchronized void setServers(List<GraphiteServer> servers) {
+        public synchronized void setServers(@Nonnull List<GraphiteServer> servers) {
             this.servers = servers;
             save();
             try {
-                Jenkins.getInstance().getPlugin(PluginImpl.class).updateReporters();
+                Jenkins.getActiveInstance().getPlugin(PluginImpl.class).updateReporters();
             } catch (URISyntaxException e) {
                 LOGGER.log(Level.WARNING, "Could not update Graphite reporters", e);
             }
